@@ -17,43 +17,204 @@ The runtime does not change with the size of the input.
 Example: Accessing an element in an array by index
 
 ```typescript
-function getElement(arr: T[], index:number): T {
+function getElement(arr: T[], index: number): T {
   return arr[index];
 }
-
+```
 
 ### O(log n) logarithmic time.
 
 The runtime grows grows logarithmically as the input size increases.
 Example Binary search in a sorted array.
 
+```typescript
+function binarySearch(arr: number[], target: number): number {
+  let left = 0;
+  let right = arr.length - 1;
 
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) {
+      return mid;
+    } else if (arr[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
 
+  return -1; // Target not found
+}
+
+// Example usage:
+const sortedArray = [1, 2, 3, 4, 5];
+console.log(binarySearch(sortedArray, 3)); // Output: 2
+```
 
 ### O(n) Linear time.
 
 The runtime grows linearly with the size of the input.
-Example Iterating through all the element in a list.
+Example Finding the maximum element in an array:
+
+```typescript
+function findMax(arr: number[]): number {
+  let maxVal = arr[0];
+  for (const num of arr) {
+    if (num > maxVal) {
+      maxVal = num;
+    }
+  }
+  return maxVal;
+}
+
+// Example usage:
+const numbers = [1, 2, 3, 4, 5];
+console.log(findMax(numbers)); // Output: 5
+```
 
 ### O(n log n) Linearthimic time.
 
 The runtime grows in proportion to n log n.
 Example Efficient sorting algorithm like merge sort and heap sort.
 
+```typescript
+function mergeSort(arr: number[]): number[] {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+
+  return merge(left, right);
+}
+
+function merge(left: number[], right: number[]): number[] {
+  const result: number[] = [];
+  let i = 0,
+    j = 0;
+
+  while (i < left.length && j < right.length) {
+    if (left[i] < right[j]) {
+      result.push(left[i]);
+      i++;
+    } else {
+      result.push(right[j]);
+      j++;
+    }
+  }
+
+  return result.concat(left.slice(i)).concat(right.slice(j));
+}
+
+// Example usage:
+const unsortedArray = [5, 3, 8, 4, 2];
+console.log(mergeSort(unsortedArray)); // Output: [2, 3, 4, 5, 8]
+```
+
 ### O(n^2) Quadratic time.
 
 The runtime grows Quadratically with the size of the input
 Example Bubble sort, insertion sort(in their worst case)
 
+```typescript
+function bubbleSort(arr: number[]): number[] {
+  const n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // Swap
+      }
+    }
+  }
+  return arr;
+}
+
+// Example usage:
+const unsortedArray = [5, 3, 8, 4, 2];
+console.log(bubbleSort(unsortedArray)); // Output: [2, 3, 4, 5, 8]
+```
+
 ### O(2^n) Exponential time.
 
 The runtime doubles with each additional element in the input.
-Example solving the traveling salesman problem using brute-force
+Example solving the Tower of Hanoi:
+
+```typescript
+function towerOfHanoi(
+  n: number,
+  source: string,
+  target: string,
+  auxiliary: string
+): void {
+  if (n === 1) {
+    console.log(`Move disk 1 from ${source} to ${target}`);
+    return;
+  }
+  towerOfHanoi(n - 1, source, auxiliary, target);
+  console.log(`Move disk ${n} from ${source} to ${target}`);
+  towerOfHanoi(n - 1, auxiliary, target, source);
+}
+
+// Example usage:
+towerOfHanoi(3, "A", "C", "B");
+// Output: sequence of moves to solve the problem
+```
 
 ### O(n!) Factorial time.
 
 The runtime grows Factorially with the size of the input.
-Example solving the traveling salesman problem using brute-force
+Example solving the traveling salesman problem using brute-force.
+
+```typescript
+function travelingSalesmanProblem(graph: number[][], start: number): number {
+  const vertices: number[] = [];
+  for (let i = 0; i < graph.length; i++) {
+    if (i !== start) vertices.push(i);
+  }
+
+  let minPath = Number.POSITIVE_INFINITY;
+
+  function permute(permutation: number[]): number[][] {
+    if (permutation.length === 0) return [[]];
+    const result: number[][] = [];
+    for (let i = 0; i < permutation.length; i++) {
+      const rest = permute(
+        permutation.slice(0, i).concat(permutation.slice(i + 1))
+      );
+      for (const r of rest) {
+        result.push([permutation[i], ...r]);
+      }
+    }
+    return result;
+  }
+
+  const permutations = permute(vertices);
+
+  for (const perm of permutations) {
+    let currentPathweight = 0;
+    let k = start;
+    for (const j of perm) {
+      currentPathweight += graph[k][j];
+      k = j;
+    }
+    currentPathweight += graph[k][start];
+    minPath = Math.min(minPath, currentPathweight);
+  }
+
+  return minPath;
+}
+
+// Example usage:
+const graph = [
+  [0, 10, 15, 20],
+  [10, 0, 35, 25],
+  [15, 35, 0, 30],
+  [20, 25, 30, 0],
+];
+console.log(travelingSalesmanProblem(graph, 0)); // Output: the minimum path weight
+```
 
 ## Simplifying Big O Expressions
 
@@ -84,4 +245,7 @@ Rule of Thumb
 1 Most primitives (booleans, numbers, undefined, null) are constant space
 2 Strings require O(n) Space (where n is the string length)
 3 Reference types are generally O(n), where n is the length(for arrays) or the keys(for objects)
+
+```
+
 ```
