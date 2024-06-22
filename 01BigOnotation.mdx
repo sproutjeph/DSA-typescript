@@ -16,7 +16,7 @@ Big O notation helps in analyzing the efficiency of algorithms, allowing you to 
 The runtime does not change with the size of the input.
 Example: Accessing an element in an array by index
 
-````typescript
+```typescript
 function getElement(arr: T[], index:number): T {
   return arr[index];
 }
@@ -25,12 +25,8 @@ function getElement(arr: T[], index:number): T {
 ### O(log n) logarithmic time.
 
 The runtime grows grows logarithmically as the input size increases.
-```Example Binary search in a sorted array.
+Example Binary search in a sorted array.
 
-```typescript
-function getElement(arr: T[], index:number): T {
-  return arr[index];
-}
 
 
 
@@ -88,4 +84,4 @@ Rule of Thumb
 1 Most primitives (booleans, numbers, undefined, null) are constant space
 2 Strings require O(n) Space (where n is the string length)
 3 Reference types are generally O(n), where n is the length(for arrays) or the keys(for objects)
-````
+```
