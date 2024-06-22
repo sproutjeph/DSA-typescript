@@ -1,0 +1,91 @@
+# BIG O NOTATION
+
+Big O notation is a mathematical concept used in computer science to describe the performance or complexity
+of an algorithm.
+
+It provides an estimate of the longest amount of time or the largest amount of space an algorithm could possibly take to complete as a function of the input size.
+
+### Purpose of Big O Notation
+
+Big O notation helps in analyzing the efficiency of algorithms, allowing you to compare their performance based on how they scale with larger inputs. It abstracts away constants and less significant terms, focusing on the growth rate of the algorithm.
+
+## Common Big O notations
+
+### O(1) constant time.
+
+The runtime does not change with the size of the input.
+Example: Accessing an element in an array by index
+
+````typescript
+function getElement(arr: T[], index:number): T {
+  return arr[index];
+}
+
+
+### O(log n) logarithmic time.
+
+The runtime grows grows logarithmically as the input size increases.
+```Example Binary search in a sorted array.
+
+```typescript
+function getElement(arr: T[], index:number): T {
+  return arr[index];
+}
+
+
+
+### O(n) Linear time.
+
+The runtime grows linearly with the size of the input.
+Example Iterating through all the element in a list.
+
+### O(n log n) Linearthimic time.
+
+The runtime grows in proportion to n log n.
+Example Efficient sorting algorithm like merge sort and heap sort.
+
+### O(n^2) Quadratic time.
+
+The runtime grows Quadratically with the size of the input
+Example Bubble sort, insertion sort(in their worst case)
+
+### O(2^n) Exponential time.
+
+The runtime doubles with each additional element in the input.
+Example solving the traveling salesman problem using brute-force
+
+### O(n!) Factorial time.
+
+The runtime grows Factorially with the size of the input.
+Example solving the traveling salesman problem using brute-force
+
+## Simplifying Big O Expressions
+
+These are the rules of thumb for Simplifying Big O Expressions
+1 Constants don't matter.
+O(2n) => O(n)
+O(13n^2) => O(n^2)
+
+2 Smaller Terms Don't matter.
+O(1000n + 50) => O(n)
+O(n + 10) => O(n)
+O(n^2 + 5n + 8) => O(n^2)
+
+      ##  Big O Shorthands
+
+- Arithmetic opertions are Constants
+- Variable assignment is a constant
+- Accessing element in an array(by index) or object(by key) is a constant
+- In a loop the complexity is the length of the loop times the complexity of whatever happens inside of the loop.
+
+Big O Notation Graph
+
+<img src="./images/BigO.png" alt="Big O notation graph" />
+
+## Space complexity in javaScript
+
+Rule of Thumb
+1 Most primitives (booleans, numbers, undefined, null) are constant space
+2 Strings require O(n) Space (where n is the string length)
+3 Reference types are generally O(n), where n is the length(for arrays) or the keys(for objects)
+````
