@@ -25,3 +25,29 @@ let instructor = {
 // Object.values - O(N)
 // Object.entries - O(N)
 // hasOwnProperty - O(1)
+
+// Array Ordered list
+let names = ["Mbah", "Chisom"];
+
+// when to use Arrays
+// When you need order
+//• When you need fast access / insertion and removal (sort of....)
+
+// Big O of Arrays
+// insertion = it depends
+// removal = it depends
+// searching = O(n)
+// Access = O(1)
+
+// inserting at the bigging of a array costly because the array will have to be reindexed, also removing from the bigging is costly.
+// Removing from the end is O(1)
+
+// Big O of Array operations
+// push = O(1)
+// pop = O(1)
+// shift O(N)
+// concat = O(N)
+// Slice = O(N)
+// Splice = O(N)
+// sort = O(N * log N)
+// forEach, map, filter, reduce, etc = O(N)
