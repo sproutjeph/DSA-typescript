@@ -161,8 +161,7 @@ function same(arr1: number[], arr2: number[]): boolean {
 
 function validAnagram(str1: string, str2: string): boolean {
   if (str1.length !== str2.length) return false;
-
-  let freqCounter: any = {};
+  let freqCounter: { [key: string]: number } = {};
   for (let val of str1) {
     freqCounter[val] = (freqCounter[val] || 0) + 1;
   }
@@ -174,10 +173,77 @@ function validAnagram(str1: string, str2: string): boolean {
       freqCounter[val] -= 1;
     }
   }
-
   return true;
 }
 
-console.log(validAnagram("rat", "cat"));
+// console.log(validAnagram("cat", "cat"));
 
 // *************** Multiple Pointers  ***************
+// Creating pointers or values that correspond to an index or position and move towards the beginning, end or middle based on a certain condition
+// Very efficient for solving problems with minimal space complexity as well
+
+// Example
+// Write a function called sumZero which accepts a sorted array of integers. The function should find the first pair where the sum is 0. Return an array that includes both values that sum to zero or undefined if a pair does not exist
+// sumzero ([-3, -2, -1,0,1,2,3]) // [-3,3]
+// sumzero([-2, 0, 1, 3]) // undefined
+// sumzero([1, 2, 3]) // undefined
+
+// Naive solution  Big O = O(N^2)
+
+function sumZero(arr: number[]): number[] | undefined {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] + arr[j] === 0) {
+        return [arr[i], arr[j]];
+      }
+    }
+  }
+}
+
+// console.log(sumZero1([-3, -2, -1, 0, 1, 2, 3, 4]));
+
+// good solution Big O = O(N)
+
+function sumZero1(arr: number[]): number[] | undefined {
+  let left = 0;
+  let right = arr.length - 1;
+  while (left < right) {
+    if (arr[left] + arr[right] === 0) {
+      return [arr[left], arr[right]];
+    } else if (arr[left] + arr[right] !== 0) {
+      right--;
+    } else {
+      left++;
+    }
+  }
+}
+
+// countUnique Values
+// Implement a function called countUniqueValues, which accepts a sorted array, and counts the unique values in the array. There can be negative numbers in the array, but it will always be sorted.
+// countUniqueValues ([1,1, 1,1,1,21]) // 2
+// countUniqueValues ([1,2,3, 4, 4,4,7,7,12,12,131) // 7
+// countUniqueValues ( []) // 0
+// countUniqueValues ([-2,-1, -1,0,1]) // 4
+
+function countUniqueValues(arr: number[]): number {
+  if (arr.length === 0) return 0;
+  // if the length of the array is > 0 then there must be a unique value
+  let uniqueCount = 1;
+  let prevValue = arr[0];
+
+  for (let i of arr) {
+    if (prevValue !== i) {
+      uniqueCount++;
+      prevValue = i;
+    }
+  }
+  return uniqueCount;
+}
+
+console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 131]));
+
+// *************SLIDING WINDOW*****************
+// This pattern involves creating a
+// window which can either be an array or number from one position to another
+// Depending on a certain condition, the window either increases or closes (and a new window is created)
+// Very useful for keeping track of a subset of data in an array/string etc.
