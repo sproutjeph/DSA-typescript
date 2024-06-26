@@ -247,3 +247,41 @@ console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 131]));
 // window which can either be an array or number from one position to another
 // Depending on a certain condition, the window either increases or closes (and a new window is created)
 // Very useful for keeping track of a subset of data in an array/string etc.
+
+// An Example
+// Write a function called maxSubarraySum which accepts an array of integers and a number called n. The function should calculate the maximum sum of n consecutive elements in the array.
+// maxSubarraySum ([1,2, 5,2,8,1,5],2) // 10
+// maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4) // 17
+// maxSubarraySum ( [4,2,1,6],1) // 6
+// maxSubarraySum ([4,2,1,6,2],4) // 13
+//maxSubarraySum([], 4) // null
+
+function maxSubarraySum(arr: number[], n: number): number | null {
+  if (arr.length < n) return null;
+  let maxSum = 0;
+  let tempSum = 0;
+
+  // Calculate the sum of first 'n' elements
+  for (let i = 0; i < n; i++) {
+    maxSum += arr[i];
+  }
+  tempSum = maxSum;
+
+  // loop starting with j = n untill the end of the array
+  for (let j = n; j < arr.length; j++) {
+    // Slide the window and update the max sum
+    tempSum = tempSum - arr[j - n] + arr[j];
+    maxSum = Math.max(maxSum, tempSum);
+  }
+
+  return maxSum;
+}
+
+// Slide the window is the core of the algorithm. We use a sliding window approach:
+
+// Start from the nth element.
+// Subtract the first element of the previous window (arr[i - n])
+// and add the current element(arr[i]).
+// Update maxSum if the new tempSum is greater.
+
+console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4));
