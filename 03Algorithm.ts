@@ -249,12 +249,14 @@ console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 131]));
 // Very useful for keeping track of a subset of data in an array/string etc.
 
 // An Example
+//==============================================================
 // Write a function called maxSubarraySum which accepts an array of integers and a number called n. The function should calculate the maximum sum of n consecutive elements in the array.
 // maxSubarraySum ([1,2, 5,2,8,1,5],2) // 10
 // maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4) // 17
 // maxSubarraySum ( [4,2,1,6],1) // 6
 // maxSubarraySum ([4,2,1,6,2],4) // 13
 //maxSubarraySum([], 4) // null
+//==============================================================
 
 function maxSubarraySum(arr: number[], n: number): number | null {
   if (arr.length < n) return null;
@@ -284,4 +286,40 @@ function maxSubarraySum(arr: number[], n: number): number | null {
 // and add the current element(arr[i]).
 // Update maxSum if the new tempSum is greater.
 
-console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4));
+// console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4));
+
+// Divide and Conquer
+// This pattern involves dividing a data set into smaller
+// chunks and then repeating a process with a subset of data.
+// This pattern can tremendously decrease time complexity
+
+// An Example
+
+//==============================================================
+// Given a sorted array of integers, write a function called search, that accepts a value and returns the index where the value passed to the function is located. If the value is not found, return -1
+// search（[1,2,3,4,5,6],4） // 3 com
+// search ([1,2,3,4,5,6],6) // 5
+// search([1, 2, 3, 4, 5, 61, 11) // -1
+//==============================================================
+
+// This is Binary search it uses divide and conquer
+// Time Complexity - Log(N) - Binary Search!
+function search(array: number[], val: number): number {
+  let firstIdx = 0;
+  let lastIdx = array.length - 1;
+  while (firstIdx <= lastIdx) {
+    let middleIdx = Math.floor((firstIdx + lastIdx) / 2);
+    let middleElement = array[middleIdx];
+    if (middleElement < val) {
+      firstIdx = middleIdx + 1;
+    } else if (middleElement > val) {
+      lastIdx = middleIdx - 1;
+    } else {
+      return middleIdx;
+    }
+  }
+
+  return -1;
+}
+
+console.log(search([1, 2, 3, 4, 5, 6], 6));
