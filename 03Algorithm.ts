@@ -240,7 +240,7 @@ function countUniqueValues(arr: number[]): number {
   return uniqueCount;
 }
 
-console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 131]));
+// console.log(countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 131]));
 
 // *************SLIDING WINDOW*****************
 // This pattern involves creating a
@@ -304,15 +304,16 @@ function maxSubarraySum(arr: number[], n: number): number | null {
 
 // This is Binary search it uses divide and conquer
 // Time Complexity - Log(N) - Binary Search!
-function search(array: number[], val: number): number {
+function search(array: number[], target: number): number {
   let firstIdx = 0;
   let lastIdx = array.length - 1;
   while (firstIdx <= lastIdx) {
     let middleIdx = Math.floor((firstIdx + lastIdx) / 2);
     let middleElement = array[middleIdx];
-    if (middleElement < val) {
+
+    if (middleElement < target) {
       firstIdx = middleIdx + 1;
-    } else if (middleElement > val) {
+    } else if (middleElement > target) {
       lastIdx = middleIdx - 1;
     } else {
       return middleIdx;
