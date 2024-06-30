@@ -13,7 +13,7 @@ It is asked in interviews
 /* 
 BubbleSort
 A sorting algorithm where the largest values bubble up to the top!
-[5, 3, 4, 1,2)
+[5, 3, 4, 1,2]
 [ 3, 5, 4, 1, 2 ]
 */
 
