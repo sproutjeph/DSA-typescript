@@ -90,24 +90,33 @@ Steps in TypeScript
 
 	1.	Partition Function: This function rearranges the elements around the pivot.
 	2.	Quick Sort Function: This function recursively sorts the sub-arrays.
+
+ BIG O OF QUICKSORT
+ time (Best) O(n log n)
+ time (Average) O(n log n)
+ time (Worst) O(n^2)
+ space O(log n)
 */
 
-function partition(arr: number[], start: number, end: number): number {
+function partition(
+  arr: number[],
+  start: number = 0,
+  end: number = arr.length - 1
+): number {
   function swap(arr: number[], idx1: number, idx2: number) {
     [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
   }
+  let pivot = arr[start];
+  let swapIdx = start;
 
-  let pivot = arr[end];
-  let swapIdx = start - 1;
-
-  for (let i = start; i < end; i++) {
-    if (arr[i] <= pivot) {
+  for (let i = start; i <= end; i++) {
+    if (pivot > arr[i]) {
       swapIdx++;
       swap(arr, swapIdx, i);
     }
   }
-  swap(arr, swapIdx + 1, end);
-  return swapIdx + 1;
+  swap(arr, start, swapIdx);
+  return swapIdx;
 }
 
 function quickSort(arr: number[], start = 0, end = arr.length - 1): number[] {
@@ -120,5 +129,5 @@ function quickSort(arr: number[], start = 0, end = arr.length - 1): number[] {
   return arr;
 }
 
-// console.log(partition([10, 7, 4, 5, 2, 6, 8]));
-console.log(quickSort([10, 7, 4, 5, 2, 6, 8]));
+console.log(partition([100, -1, 5, 2, 3, 66, 10, 7, 4, 2, 6, 8]));
+console.log(quickSort([-4, 10, 7, 4, 5, 2, 6, 80, 0]));
