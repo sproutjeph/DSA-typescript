@@ -58,4 +58,25 @@ function radixSort(nums: number[]): number[] {
 
 // console.log(getDigitAtPlaceValue(12345, 0));
 // console.log(digitCount(1234));
-console.log(radixSort([123, 4, 56, -1, 33, 55, 66, 2, 0, 4]));
+// console.log(radixSort([123, 4, 56, -1, 33, 55, 66, 2, 0, 4]));
+
+function findIdx1(haystack: string, needle: string): number {
+  for (let i = 0; i < haystack.length - needle.length + 1; i++) {
+    if (haystack.slice(i, i + needle.length) === needle) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+function findIdx2(haystack: string, needle: string): number {
+  if (haystack.includes(needle)) {
+    const splitedHaystack = haystack.split(needle)[0];
+    return splitedHaystack.length;
+  }
+
+  return -1;
+}
+
+// findIdx("sadbutsad", "sad"); // 0
+console.log(findIdx1("butsadbutsad", "sad"));

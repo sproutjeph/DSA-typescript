@@ -129,5 +129,30 @@ function quickSort(arr: number[], start = 0, end = arr.length - 1): number[] {
   return arr;
 }
 
-console.log(partition([100, -1, 5, 2, 3, 66, 10, 7, 4, 2, 6, 8]));
-console.log(quickSort([-4, 10, 7, 4, 5, 2, 6, 80, 0]));
+// console.log(partition([100, -1, 5, 2, 3, 66, 10, 7, 4, 2, 6, 8]));
+// console.log(quickSort([-4, 10, 7, 4, 5, 2, 6, 80, 0]));
+
+function plusOne(digits: number[]): number[] {
+  const n = digits.length;
+  // Start from the least significant digit
+  for (let i = n - 1; i >= 0; i--) {
+    // If the digit is less than 9, we can simply increment it and return
+    if (digits[i] < 9) {
+      digits[i]++;
+      return digits;
+    }
+
+    // If the digit is 9, set it to 0 and continue to the next digit
+    digits[i] = 0;
+  }
+
+  // If we're here, it means all digits were 9
+  // We need a new array with an additional digit
+  // const newNumber = new Array(n + 1).fill(0);
+  const newNumber = Array.from({ length: n + 1 }, () => 0);
+  newNumber[0] = 1;
+  return newNumber;
+}
+
+console.log(plusOne([1, 2, 9]));
+// [1,2,3,4]
