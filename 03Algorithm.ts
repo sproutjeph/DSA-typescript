@@ -15,14 +15,14 @@
 // returns counts of each character in the string.
 // ==============================================================
 
-// Think about the edge caseses
-// Think about lowerCase and Uppercase,numbers and special charaters and also spaces
-// What if no string was inputed in the function
+// Think about the edge cases
+// Think about lowerCase and Uppercase,numbers and special characters and also spaces
+// What if no string was inputted in the function
 
 function sodu(str: string) {
   //create an obj to hold the result
   // loop tru the str convert to toLowerCase
-  // check for alphnumeric charaters. /[a-z0-9]/.check("ajsjjjs112?")
+  // check for alphanumeric characters. /[a-z0-9]/.check("ajsjjjs112?")
   // if obj(char) is in obj increment else obj[char] = 1
   //return an obj
 }
@@ -73,7 +73,7 @@ function charCount3(str: string): { [key: string]: number } {
 
 //console.log(charCount3("helloooooH   1222 + !"));
 
-// This is more efficent to check if a charater is AlphNumeric than use /[a-z0-9]/.test()
+// This is more efficient to check if a character is AlphaNumeric than use /[a-z0-9]/.test()
 function isAlphaNumeric(str: string): boolean {
   let code: number;
   for (let i = 0, len = str.length; i < len; i++) {
@@ -184,9 +184,9 @@ function validAnagram(str1: string, str2: string): boolean {
 
 // Example
 // Write a function called sumZero which accepts a sorted array of integers. The function should find the first pair where the sum is 0. Return an array that includes both values that sum to zero or undefined if a pair does not exist
-// sumzero ([-3, -2, -1,0,1,2,3]) // [-3,3]
-// sumzero([-2, 0, 1, 3]) // undefined
-// sumzero([1, 2, 3]) // undefined
+// sumZero ([-3, -2, -1,0,1,2,3]) // [-3,3]
+// sumZero([-2, 0, 1, 3]) // undefined
+// sumZero([1, 2, 3]) // undefined
 
 // Naive solution  Big O = O(N^2)
 
@@ -304,7 +304,7 @@ function maxSubarraySum(arr: number[], n: number): number | null {
 
 // This is Binary search it uses divide and conquer
 // Time Complexity - Log(N) - Binary Search!
-function search(array: number[], target: number): number {
+function binarySearch(array: number[], target: number): number {
   let firstIdx = 0;
   let lastIdx = array.length - 1;
   while (firstIdx <= lastIdx) {
@@ -323,4 +323,4 @@ function search(array: number[], target: number): number {
   return -1;
 }
 
-console.log(search([1, 2, 3, 4, 5, 6], 6));
+console.log(binarySearch([1, 2, 3, 4, 5, 6], 6));

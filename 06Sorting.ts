@@ -60,7 +60,7 @@ function bubbleSort(arr: number[]): number[] {
   return arr;
 }
 
-// this is more clear and logical and may be more efficent
+// this is more clear and logical and may be more efficient
 // In a simple term bubble sort is just compare two adjacent elem is the first > than the following swap do it unit there is no more swaps
 function bubbleSort1(arr: number[]): number[] {
   let swapped: boolean;
@@ -93,7 +93,7 @@ Similar to bubble sort, but instead of first placing large values into sorted po
 • Repeat this with the next element until the array is sorted.
 */
 
-// Big of selection sort is O(n^2) but it is more efficent than bubble sort
+// Big of selection sort is O(n^2) but it is more efficient than bubble sort
 function selectionSort(arr: number[]): number[] {
   for (let i = 0; i < arr.length; i++) {
     let min = i;
@@ -135,12 +135,12 @@ function insertionSort(arr: number[]): number[] {
     let currentVal = arr[i];
     // The elem we are going to place in the right spot
     let j = i - 1;
-    // Move the elems that are bigger than the currentVal to the right
+    // Move the elements that are bigger than the currentVal to the right
     while (j >= 0 && arr[j] > currentVal) {
       arr[j + 1] = arr[j];
-      j = j - 1;
+      j--;
     }
-    // Place the cureentVal in the right spot
+    // Place the currentVal in the right spot
     arr[j + 1] = currentVal;
   }
   return arr;
