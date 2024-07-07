@@ -109,7 +109,7 @@ function partition(
   let pivot = arr[start];
   let swapIdx = start;
 
-  for (let i = start; i <= end; i++) {
+  for (let i = start + 1; i <= end; i++) {
     if (pivot > arr[i]) {
       swapIdx++;
       swap(arr, swapIdx, i);
@@ -183,5 +183,5 @@ function plusOne(digits: number[]): number[] {
   return newNumber;
 }
 
-console.log(plusOne([1, 2, 9]));
+// console.log(plusOne([1, 2, 9]));
 // [1,2,3,4]
