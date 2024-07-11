@@ -13,6 +13,23 @@ Arrays
 • Indexed in order!
 • Insertion and deletion can be expensive
 • Can quickly be accessed at a specific index
+
+size flexibility:
+
+Arrays have a fixed size (in most languages)
+Linked lists can grow or shrink dynamically
+
+
+Access time:
+
+Arrays offer O(1) random access
+Linked lists require O(n) time for access
+
+
+Insertion/Deletion:
+
+Arrays are slower (O(n) for arbitrary positions)
+Linked lists are faster (O(1) if position is known)
 */
 
 class Node<T> {

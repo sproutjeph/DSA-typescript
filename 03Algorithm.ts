@@ -143,7 +143,41 @@ function same(arr1: number[], arr2: number[]): boolean {
   return true;
 }
 
-// console.log(same([1, 2, 3], [1, 4, 9]));
+function sameForLoop(arr1: number[], arr2: number[]): boolean {
+  if (arr1.length !== arr2.length) return false;
+
+  for (let i = 0; i < arr1.length; i++) {
+    let foundSquare = false;
+
+    for (let j = 0; j < arr2.length; j++) {
+      if (arr1[i] ** 2 === arr2[j]) {
+        // Found the square, remove it from arr2
+        arr2.splice(j, 1);
+        foundSquare = true;
+        break;
+      }
+    }
+
+    // If square not found, return false
+    if (!foundSquare) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function compare(arr1: number[], arr2: number[]) {
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      console.log(arr1[i], arr2[j]);
+      arr2.splice(j, 1);
+      break;
+    }
+  }
+}
+
+// console.log(compare([1, 2, 3, 4], [1, 4, 9, 16]));
 
 // ==============================================================
 // ANAGRAMS
@@ -229,12 +263,12 @@ function countUniqueValues(arr: number[]): number {
   if (arr.length === 0) return 0;
   // if the length of the array is > 0 then there must be a unique value
   let uniqueCount = 1;
-  let prevValue = arr[0];
+  let current = arr[0];
 
   for (let i of arr) {
-    if (prevValue !== i) {
+    if (i !== current) {
       uniqueCount++;
-      prevValue = i;
+      current = i;
     }
   }
   return uniqueCount;
@@ -261,23 +295,24 @@ function countUniqueValues(arr: number[]): number {
 function maxSubarraySum(arr: number[], n: number): number | null {
   if (arr.length < n) return null;
   let maxSum = 0;
-  let tempSum = 0;
+  let windowSum = 0;
 
   // Calculate the sum of first 'n' elements
   for (let i = 0; i < n; i++) {
     maxSum += arr[i];
   }
-  tempSum = maxSum;
+  windowSum = maxSum;
 
-  // loop starting with j = n untill the end of the array
+  // loop starting with j = n until the end of the array
   for (let j = n; j < arr.length; j++) {
     // Slide the window and update the max sum
-    tempSum = tempSum - arr[j - n] + arr[j];
-    maxSum = Math.max(maxSum, tempSum);
+    windowSum = windowSum - arr[j - n] + arr[j];
+    maxSum = Math.max(maxSum, windowSum);
   }
 
   return maxSum;
 }
+console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 2));
 
 // Slide the window is the core of the algorithm. We use a sliding window approach:
 
@@ -285,8 +320,6 @@ function maxSubarraySum(arr: number[], n: number): number | null {
 // Subtract the first element of the previous window (arr[i - n])
 // and add the current element(arr[i]).
 // Update maxSum if the new tempSum is greater.
-
-// console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4));
 
 // Divide and Conquer
 // This pattern involves dividing a data set into smaller
@@ -323,4 +356,4 @@ function binarySearch(array: number[], target: number): number {
   return -1;
 }
 
-console.log(binarySearch([1, 2, 3, 4, 5, 6], 6));
+// console.log(binarySearch([1, 2, 3, 4, 5, 6], 6));

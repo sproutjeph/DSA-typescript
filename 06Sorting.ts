@@ -68,7 +68,6 @@ function bubbleSort1(arr: number[]): number[] {
     swapped = false;
     for (let i = 0; i < arr.length - 1; i++) {
       if (arr[i] > arr[i + 1]) {
-        //swap
         [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
         swapped = true;
       }
@@ -80,7 +79,7 @@ function bubbleSort1(arr: number[]): number[] {
 
 // BIG O of Bubble sort is O(n^2)
 
-// console.log(bubbleSort1([5, 6, 7, 2, 1, 3]));
+console.log(bubbleSort1([5, 6, 7, 2, 1, 3]));
 
 //***************Selection Sort********************
 /*
@@ -146,7 +145,7 @@ function insertionSort(arr: number[]): number[] {
   return arr;
 }
 
-console.log(insertionSort([9, 4, 6, 3, 1, 2]));
+// console.log(insertionSort([9, 4, 6, 3, 1, 2]));
 
 /*
        Big 0 of Sorting Algorithms

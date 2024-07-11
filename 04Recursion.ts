@@ -5,7 +5,7 @@
 
 // Example of recursive function
 // JSON.parse / JSON.stringify
-// • document.getElementByld and DOM traversal
+// • document.getElementById and DOM traversal
 // algorithms
 // • Object traversal
 
@@ -19,8 +19,8 @@ This is the most important concept to understand
 
 Two essential parts of a recursive function!
 • Base Case
-• Ditterent Input
-The function must be called with diffrent inputs
+• Different Input
+The function must be called with different inputs
 */
 
 // Example
