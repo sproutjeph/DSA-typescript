@@ -48,8 +48,8 @@ After the outer loop completes, return the sorted array.
 */
 
 function bubbleSort(arr: number[]): number[] {
-  for (let i = arr.length; i > 0; i--) {
-    for (let j = 0; j < i - 1; j++) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j < arr.length - 1; j++) {
       if (arr[j] > arr[j + 1]) {
         // swap
         [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -79,7 +79,7 @@ function bubbleSort1(arr: number[]): number[] {
 
 // BIG O of Bubble sort is O(n^2)
 
-console.log(bubbleSort1([5, 6, 7, 2, 1, 3]));
+// console.log(bubbleSort1([5, 6, 7, 2, 1, 3]));
 
 //***************Selection Sort********************
 /*
@@ -94,7 +94,7 @@ Similar to bubble sort, but instead of first placing large values into sorted po
 
 // Big of selection sort is O(n^2) but it is more efficient than bubble sort
 function selectionSort(arr: number[]): number[] {
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length - 1; i++) {
     let min = i;
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[j] < arr[min]) {
@@ -108,7 +108,7 @@ function selectionSort(arr: number[]): number[] {
   return arr;
 }
 
-// console.log(selectionSort([5, 6, 7, 2, 1, 3, 0]));
+console.log(selectionSort([5, 6, 7, 2, 1, 3, 0]));
 
 // ***************Insertion Sort*******************
 /*
@@ -129,23 +129,15 @@ Insertion Sort Pseudocode
 */
 
 function insertionSort(arr: number[]): number[] {
-  // Loop through each element starting from the second one
   for (let i = 1; i < arr.length; i++) {
-    let currentVal = arr[i];
-    // The elem we are going to place in the right spot
-    let j = i - 1;
-    // Move the elements that are bigger than the currentVal to the right
-    while (j >= 0 && arr[j] > currentVal) {
-      arr[j + 1] = arr[j];
-      j--;
+    for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
+      [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
     }
-    // Place the currentVal in the right spot
-    arr[j + 1] = currentVal;
   }
   return arr;
 }
 
-// console.log(insertionSort([9, 4, 6, 3, 1, 2]));
+console.log(insertionSort([9, 4, 6, 3, 1, 2]));
 
 /*
        Big 0 of Sorting Algorithms
