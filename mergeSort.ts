@@ -1,5 +1,5 @@
-// Merge Sort is a popular and efficient sorting algorithm that uses the divide-and-conquer strategy. It works by dividing the array into smaller subarrays, sorting
-// those subarrays, and then merging them back together in sorted order. Merge Sort has a time complexity of 𝑂(𝑛log𝑛)O(nlogn), making it one of the most efficient
+// Merge Sort is a popular and efficient sorting algorithm that uses the divide-and-conquer strategy. It works by dividing the array into smaller subArrays, sorting
+// those subArrays, and then merging them back together in sorted order. Merge Sort has a time complexity of 𝑂(𝑛 log 𝑛), making it one of the most efficient
 // general-purpose sorting algorithms.
 
 // Merge Sort Algorithm Steps
