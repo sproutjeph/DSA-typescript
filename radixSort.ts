@@ -68,3 +68,67 @@ console.log(radixSort([170, 45, 75, 90, 802, 24, 2, 66]));
 // Time Complexity (Worst) O(nk)
 
 // Space Complexity O(n + k)
+
+function radixSortSimple(arr: number[]): number[] {
+  const max = Math.max(...arr);
+  const maxDigits = Math.floor(Math.log10(max)) + 1;
+
+  for (let digit = 0; digit < maxDigits; digit++) {
+    const buckets: number[][] = Array.from({ length: 10 }, () => []);
+
+    for (const num of arr) {
+      const digitValue = Math.floor(num / Math.pow(10, digit)) % 10;
+      buckets[digitValue].push(num);
+    }
+
+    arr = buckets.flat();
+  }
+
+  return arr;
+}
+
+// Example usage
+const arr = [170, 45, 75, 90, 802, 24, 2, 66];
+console.log("Original array:", arr);
+console.log("Sorted array:", radixSortSimple(arr));
+
+function radixSortEfficient(arr: number[]): void {
+  const max = Math.max(...arr);
+  const maxDigits = Math.floor(Math.log10(max)) + 1;
+  const n = arr.length;
+  const output = new Array(n).fill(0);
+  const count = new Array(10).fill(0);
+
+  for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
+    // Clear count array
+    count.fill(0);
+
+    // Count occurrences
+    for (let i = 0; i < n; i++) {
+      count[Math.floor(arr[i] / exp) % 10]++;
+    }
+
+    // Cumulative count
+    for (let i = 1; i < 10; i++) {
+      count[i] += count[i - 1];
+    }
+
+    // Build output array
+    for (let i = n - 1; i >= 0; i--) {
+      const index = Math.floor(arr[i] / exp) % 10;
+      output[count[index] - 1] = arr[i];
+      count[index]--;
+    }
+
+    // Copy output to arr
+    for (let i = 0; i < n; i++) {
+      arr[i] = output[i];
+    }
+  }
+}
+
+// Example usage
+const arr2 = [170, 45, 75, 90, 802, 24, 2, 66];
+console.log("Original array:", arr2);
+radixSortEfficient(arr2);
+console.log("Sorted array:", arr2);

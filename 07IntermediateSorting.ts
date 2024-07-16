@@ -98,19 +98,19 @@ Steps in TypeScript
  space O(log n)
 */
 
+function swap(arr: number[], idx1: number, idx2: number) {
+  [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+}
 function partition(
   arr: number[],
   start: number = 0,
   end: number = arr.length - 1
 ): number {
-  function swap(arr: number[], idx1: number, idx2: number) {
-    [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
-  }
   let pivot = arr[start];
   let swapIdx = start;
 
   for (let i = start + 1; i <= end; i++) {
-    if (pivot > arr[i]) {
+    if (arr[i] < pivot) {
       swapIdx++;
       swap(arr, swapIdx, i);
     }
@@ -130,7 +130,7 @@ function quickSort(arr: number[], start = 0, end = arr.length - 1): number[] {
 }
 
 // console.log(partition([100, -1, 5, 2, 3, 66, 10, 7, 4, 2, 6, 8]));
-// console.log(quickSort([-4, 10, 7, 4, 5, 2, 6, 80, 0]));
+console.log(quickSort([-4, 10, 7, 4, 5, 2, 6, 80, 0]));
 
 /*
 You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
