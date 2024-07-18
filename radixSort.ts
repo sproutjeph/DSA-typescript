@@ -24,7 +24,7 @@ function digitCount(num: number): number {
   if (num === 0) return 1;
   return Math.floor(Math.log10(Math.abs(num))) + 1;
 }
-console.log(digitCount(12345));
+// console.log(digitCount(12345));
 
 // mostDigits(nums) - Given an array of numbers, returns the number of digits in the largest numbers in the list
 // mostDigits([11234, 56,71]）：//4
@@ -58,7 +58,7 @@ function radixSort(nums: number[]): number[] {
   return nums;
 }
 
-console.log(radixSort([170, 45, 75, 90, 802, 24, 2, 66]));
+// console.log(radixSort([170, 45, 75, 90, 802, 24, 2, 66]));
 
 // Big O of RADIX SORT
 // TIME Complexity(Best) O(nk)
@@ -87,48 +87,97 @@ function radixSortSimple(arr: number[]): number[] {
   return arr;
 }
 
-// Example usage
-const arr = [170, 45, 75, 90, 802, 24, 2, 66];
-console.log("Original array:", arr);
-console.log("Sorted array:", radixSortSimple(arr));
+function countingSortByDigit(
+  arr: number[],
+  exp: number,
+  base: number = 10
+): void {
+  let n = arr.length;
+  let output = new Array(n).fill(0);
+  let count = new Array(base).fill(0);
 
-function radixSortEfficient(arr: number[]): void {
-  const max = Math.max(...arr);
-  const maxDigits = Math.floor(Math.log10(max)) + 1;
-  const n = arr.length;
-  const output = new Array(n).fill(0);
-  const count = new Array(10).fill(0);
+  // Count occurrences of each digit
+  for (let i = 0; i < n; i++) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    count[digit]++;
+  }
 
-  for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-    // Clear count array
-    count.fill(0);
+  // Modify count array to store actual positions
+  for (let i = 1; i < base; i++) {
+    count[i] += count[i - 1];
+  }
 
-    // Count occurrences
-    for (let i = 0; i < n; i++) {
-      count[Math.floor(arr[i] / exp) % 10]++;
-    }
+  // Build the output array
+  for (let i = n - 1; i >= 0; i--) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    output[count[digit] - 1] = arr[i];
+    count[digit]--;
+  }
 
-    // Cumulative count
-    for (let i = 1; i < 10; i++) {
-      count[i] += count[i - 1];
-    }
-
-    // Build output array
-    for (let i = n - 1; i >= 0; i--) {
-      const index = Math.floor(arr[i] / exp) % 10;
-      output[count[index] - 1] = arr[i];
-      count[index]--;
-    }
-
-    // Copy output to arr
-    for (let i = 0; i < n; i++) {
-      arr[i] = output[i];
-    }
+  //Copy the output array to arr
+  for (let i = 0; i < n; i++) {
+    arr[i] = output[i];
   }
 }
 
-// Example usage
-const arr2 = [170, 45, 75, 90, 802, 24, 2, 66];
-console.log("Original array:", arr2);
-radixSortEfficient(arr2);
-console.log("Sorted array:", arr2);
+function countingSort1(arr: number[], exp: number, base: number = 10): void {
+  let n = arr.length;
+  let output = new Array(n).fill(0);
+  let count = new Array(base).fill(0);
+
+  for (let i = 0; i < n; i++) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    count[digit]++;
+  }
+
+  for (let i = 1; i < base; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (let i = n - 1; i >= 0; i--) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    output[count[digit] - 1] = arr[i];
+    count[digit]--;
+  }
+  for (let i = 0; i < n; i++) {
+    arr[i] = output[i];
+  }
+}
+
+function countingSort2(arr: number[], exp: number, base: number = 10): void {
+  let n = arr.length;
+  let output = new Array(n).fill(0);
+  let count = new Array(base).fill(0);
+
+  for (let i = 0; i < n; i++) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    count[digit]++;
+  }
+
+  for (let i = 1; i < base; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (let i = n - 1; i >= 0; i--) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    output[count[digit] - 1] = arr[i];
+    count[digit]--;
+  }
+
+  for (let i = 0; i < n; i++) {
+    arr[i] = output[i];
+  }
+}
+
+function radixSort1(arr: number[], base: number = 10): number[] {
+  if (arr.length <= 1) return arr;
+
+  const max = Math.max(...arr);
+
+  for (let exp = 1; Math.floor(max / exp) > 0; exp *= base) {
+    countingSortByDigit(arr, exp, base);
+  }
+  return arr;
+}
+
+console.log("Sorted array:", radixSort1([170, 45, 75, 90, 802, 24, 2, 66]));
