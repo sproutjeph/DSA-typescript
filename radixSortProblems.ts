@@ -184,3 +184,39 @@ function radixSort4(arr: number[], base: number = 10): number[] {
   return [...negative, ...positive];
 }
 console.log(radixSort4([-1, 2, -3, 4, -5, 6, -7, 8, -9, 0]));
+
+function countSortByDigit(arr: number[], exp: number, base: number = 10): void {
+  let n = arr.length;
+  let output = new Array(n).fill(0);
+  let count = new Array(base).fill(0);
+
+  for (let i = 0; i < n; i++) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    count[digit]++;
+  }
+
+  for (let i = 1; i < base; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (let i = n - 1; i >= 0; i--) {
+    const digit = Math.floor(arr[i] / exp) % base;
+    output[count[digit] - 1] = arr[i];
+    count[digit]--;
+  }
+  for (let i = 0; i < n; i++) {
+    arr[i] = output[i];
+  }
+}
+
+function radixSort5(arr: number[], base: number = 10): number[] {
+  if (arr.length <= 1) return arr;
+  let max = Math.max(...arr);
+
+  for (let exp = 1; Math.floor(max / exp) > 0; exp *= base) {
+    countSortByDigit(arr, exp);
+  }
+  return arr;
+}
+
+console.log(radixSort5([12, 44, 8888, 9, 0]));

@@ -3,7 +3,8 @@ What is a linked list?
 A data structure that contains a head, tail and length property.
 Linked Lists consist of nodes, and each node has a value and a pointer to another node or null
 
-
+Each Node has a address of where the next node is
+We can only move from start to end
 Comparisons with Arrays
 Lists
 • Do not have indexes!,
@@ -32,25 +33,24 @@ Arrays are slower (O(n) for arbitrary positions)
 Linked lists are faster (O(1) if position is known)
 */
 
+// class Node<T> {
+//   data: T;
+//   next: Node<T> | null;
+//   constructor(data: T, next: Node<T> | null = null) {
+//     this.data = data;
+//     this.next = next;
+//   }
+// }
 class Node<T> {
-  data: T;
-  next: Node<T> | null;
-  constructor(data: T, next: Node<T> | null = null) {
-    this.data = data;
-    this.next = next;
-  }
+  constructor(public data: T, public next: Node<T> | null = null) {}
 }
 
 class LinkedList<T> {
-  private head: Node<T> | null;
-  private tail: Node<T> | null;
-  private _length: number;
-
-  constructor() {
-    this.head = null;
-    this.tail = null;
-    this._length = 0;
-  }
+  constructor(
+    private head: Node<T> | null = null,
+    private tail: Node<T> | null = null,
+    private _length: number = 0
+  ) {}
 
   get length(): number {
     return this._length;
@@ -73,9 +73,9 @@ class LinkedList<T> {
   }
 
   // Remove and return the last item
-  pop(): T | undefined {
+  pop(): T | null {
     if (!this.head) {
-      return undefined;
+      return null;
     }
 
     let data: T;
@@ -98,9 +98,9 @@ class LinkedList<T> {
   }
 
   // Remove and return the first item
-  shift(): T | undefined {
+  shift(): T | null {
     if (!this.head) {
-      return undefined;
+      return null;
     }
 
     const shiftedNode = this.head;
