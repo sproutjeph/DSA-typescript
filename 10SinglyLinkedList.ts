@@ -41,234 +41,185 @@ Linked lists are faster (O(1) if position is known)
 //     this.next = next;
 //   }
 // }
+
 class Node<T> {
   constructor(public data: T, public next: Node<T> | null = null) {}
 }
 
 class LinkedList<T> {
-  constructor(
-    private head: Node<T> | null = null,
-    private tail: Node<T> | null = null,
-    private _length: number = 0
-  ) {}
+  constructor(private head: Node<T> | null = null, private _length = 0) {}
 
-  get length(): number {
-    return this._length;
+  //add at the beginning of the list
+  prepend(data: T) {
+    const newNode = new Node(data, this.head);
+    this.head = newNode;
+    this._length++;
   }
 
-  // Add a new node to the end of the list
+  // Add at the end of the list
   append(data: T) {
     const newNode = new Node(data);
     if (!this.head) {
       this.head = newNode;
-      this.tail = newNode;
-    } else {
-      this.tail!.next = newNode;
-      this.tail = newNode;
-    }
-
-    this._length++;
-
-    return this;
-  }
-
-  // Remove and return the last item
-  pop(): T | null {
-    if (!this.head) {
-      return null;
-    }
-
-    let data: T;
-    if (this.head === this.tail) {
-      data = this.head.data;
-      this.head = null;
-      this.tail = null;
     } else {
       let current = this.head;
-      while (current.next !== this.tail) {
-        current = current.next!;
+      while (current.next) {
+        current = current.next;
       }
-      data = this.tail!.data;
-      current.next = null;
-      this.tail = current;
-    }
-
-    this._length--;
-    return data;
-  }
-
-  // Remove and return the first item
-  shift(): T | null {
-    if (!this.head) {
-      return null;
-    }
-
-    const shiftedNode = this.head;
-    this.head = this.head.next;
-    this._length--;
-
-    if (this._length === 0) {
-      this.tail = null;
-    }
-
-    return shiftedNode.data;
-  }
-
-  // Add a new node to the beginning of the list
-  unshift(data: T): void {
-    const newNode = new Node(data);
-    if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
-    } else {
-      newNode.next = this.head;
-      this.head = newNode;
+      current.next = newNode;
     }
     this._length++;
   }
 
-  get(position: number): Node<T> | null {
-    if (position < 0 || position >= this._length) {
-      return null;
+  // remove from the beginning
+  removeFirst(): T | null {
+    if (!this.head) return null;
+    const removedData = this.head.data;
+    this.head = this.head.next;
+    this._length--;
+    return removedData;
+  }
+
+  // remove from the End
+  pop(): T | null {
+    if (!this.head) return null;
+    if (this._length === 1) return this.removeFirst();
+
+    //For lists with more than one element, we need to traverse to the second-to-last node
+    let current = this.head;
+    while (current.next!.next) {
+      current = current.next!;
     }
+    const removedData = current.next!.data;
+    current.next = null;
+    this._length--;
+    return removedData;
+  }
+
+  // Remove at a specific position
+  removeAt(position: number): T | null {
+    if (position < 0 || position >= this._length) return null;
+    if (position === 0) return this.removeFirst();
+
+    //Traversing to the node before the one to be removed
+    let current = this.head;
+    for (let i = 0; i < position - 1; i++) {
+      current = current!.next;
+    }
+    const removedData = current!.next!.data;
+    current!.next = current!.next!.next;
+    this._length--;
+    return removedData;
+  }
+
+  // Get element at a specific position
+  getAtPosition(position: number): T | null {
+    if (position < 0 || position >= this._length) return null;
 
     let current = this.head;
     for (let i = 0; i < position; i++) {
       current = current!.next;
     }
-
-    return current;
+    return current?.data!;
   }
 
-  // Set element at a specific position
-  set(position: number, data: T): boolean {
-    const node = this.get(position);
-    if (node) {
-      node.data = data;
+  // Insert At a specific position
+  insertAt(data: T, position: number): boolean {
+    if (position < 0 || position > this._length) return false;
+    if (position === 0) {
+      this.prepend(data);
       return true;
     }
-    return false;
-  }
-
-  // Insert a new node at a specific position
-  insertAt(data: T, position: number): void {
-    if (position < 0 || position > this._length) {
-      throw new Error("Invalid position");
-    }
-
-    if (position === 0) {
-      this.unshift(data);
-    } else if (position === this._length) {
+    if (position === this._length) {
       this.append(data);
-    } else {
-      const newNode = new Node(data);
-      let current = this.head;
-      for (let i = 0; i < position - 1; i++) {
-        current = current!.next;
-      }
-      newNode.next = current!.next;
-      current!.next = newNode;
-      this._length++;
+      return true;
     }
+
+    let newNode = new Node(data);
+    let current = this.head;
+    for (let i = 0; i < position - 1; i++) {
+      current = current?.next!;
+    }
+    newNode.next = current?.next!;
+    current!.next = newNode;
+    this._length++;
+
+    return true;
   }
 
-  // Remove a node with specific data or at a specific index
-  remove(data: T, index?: number): boolean {
-    if (this.length === 0) {
-      return false;
+  // Find the position of an element
+  getPositionOf(data: T): number {
+    let current = this.head;
+    let position = 0;
+
+    while (current) {
+      if (current.data === data) return position;
+      current = current.next;
+      position++;
     }
+    return -1;
+  }
 
-    if (typeof index === "number") {
-      if (index < 0 || index >= this._length) {
-        return false;
-      }
-      if (index === 0) {
-        this.shift();
-        return true;
-      }
-      if (index === this._length - 1) {
-        this.pop();
-        return true;
-      }
-      const prevNode = this.get(index - 1);
-      if (prevNode && prevNode.next) {
-        prevNode.next = prevNode.next.next;
-        this._length--;
-        return true;
-      }
-    } else {
-      if (this.head!.data === data) {
-        this.shift();
-        return true;
-      }
+  get length() {
+    return this._length;
+  }
 
-      let previous = this.head;
-      let current = this.head!.next;
+  isEmpty(): boolean {
+    return this._length === 0;
+  }
 
-      while (current !== null) {
-        if (current.data === data) {
-          if (current === this.tail) {
-            this.pop();
-          } else {
-            previous!.next = current.next;
-            this._length--;
-          }
-          return true;
-        }
-        previous = current;
-        current = current.next;
-      }
+  clear(): void {
+    this.head = null;
+    this._length = 0;
+  }
+
+  toArray(): T[] {
+    let result: T[] = [];
+    let current = this.head;
+    while (current) {
+      result.push(current.data);
+      current = current.next;
     }
-
-    return false;
+    return result;
   }
 
   reverse(): void {
-    if (this._length <= 1) {
-      return;
-    }
+    if (this._length <= 1) return;
 
     let prev: Node<T> | null = null;
     let current: Node<T> | null = this.head;
     let next: Node<T> | null = null;
 
-    // Swap head and tail
-    this.tail = this.head;
-
     while (current !== null) {
+      // Store next node
       next = current.next;
+
+      // Reverse current node's pointer
       current.next = prev;
+      // move pointer one position ahead
       prev = current;
       current = next;
     }
-
+    // update head to point to the last node (which is now the first)
     this.head = prev;
   }
 
-  // Print the list
-  print(): void {
+  print() {
     let current = this.head;
     while (current) {
       console.log(current.data);
       current = current.next;
     }
+    console.log(this.length);
   }
 }
 
-const list = new LinkedList();
-list.append("Hello");
-list.append("jeph");
-list.append("Oluchi");
-list.append("Marry");
-list.append("Dear");
-// list.unshift("chisom");
+let list = new LinkedList();
+list.prepend("oluchi");
+list.append("Mbah");
+list.append("Chisom");
+list.prepend("oluchi2");
+// list.removeFirst();
 list.print();
-console.log("--------------");
-
 list.reverse();
-list.print();
-
-// list.pop();
-// console.log(`Get me a wife ${list.get(3)}`);
-
-// list.print();
+console.log(list.toArray());
