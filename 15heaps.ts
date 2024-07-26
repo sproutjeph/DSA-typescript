@@ -62,6 +62,7 @@ class MaxHeap {
     }
   }
 
+  // This is the deletion on heaps
   extractMax(): number | null {
     if (this.heap.length === 0) {
       return null;
